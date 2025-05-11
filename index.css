@@ -1,0 +1,99 @@
+﻿html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow-x: auto;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.timeline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 20px;
+    gap: 100px;
+    position: relative;
+    width: 100%;
+}
+
+.timeline .line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ccc;
+    z-index: 0;
+}
+
+.timeline-item .label {
+    position: absolute;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 6px;
+    color: #333;
+    font-weight: 500;
+}
+
+
+.timeline-item {
+    position: relative;
+    flex: 0 0 300px;
+    height: 200px;
+    cursor: pointer;
+    transition: flex-basis 0.4s ease, height 0.4s ease;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.timeline-item .thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.timeline-item .info {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    background: white;
+    opacity: 0;
+    transform: scale(0.8);
+    transform-origin: top left;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    overflow: auto;
+    pointer-events: none;
+}
+
+/* Класс, который включит “расширение” */
+.timeline-item.expanded {
+    flex-basis: 500px;     /* желаемая новая ширина */
+    height: 300px;         /* и высота */
+}
+
+.timeline-item.expanded .info {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.timeline-item.expanded {
+    text-align: center;
+}
+
+.timeline-item.expanded p {
+    text-align: left;
+}

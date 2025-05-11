@@ -1,0 +1,147 @@
+﻿/* Сброс и глобальные настройки */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow-x: auto;       /* документ скроллится горизонтально */
+    overflow-y: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #fff5f3;
+}
+
+p {
+    color: #2f1c17;
+}
+
+/* Скрытие горизонтального скроллбара */
+body::-webkit-scrollbar {
+    display: none;
+}
+body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Основной контейнер временной линии */
+.timeline {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+    position: relative;
+    height: 100%;
+    width: max-content;
+    padding-right: 200px;
+    padding-left: 200px;
+}
+
+/* Горизонтальная линия сквозь таймлайн */
+.timeline .line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #2f1c17 50%, rgb(255, 245, 243) 50%);;
+    z-index: 0;
+    background-size: 24px 1px;
+    pointer-events: none;
+}
+
+/* Отдельные элементы таймлайна */
+.timeline-item {
+    position: relative;
+    flex: 0 0 300px;               /* базовая ширина карточки */
+    height: 200px;
+    cursor: pointer;
+    transition: flex-basis 0.4s ease, height 0.4s ease;
+    overflow: visible;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Заголовок под картинкой */
+.timeline .time {
+    text-align: center;
+    margin-top: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+.timeline-item.expanded .time {
+    display: none;
+}
+
+/* Миниатюра (картинка) */
+.timeline-item .thumb {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Альтернатива изображению — текстовая плашка */
+.timeline-item .thumb.text {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Скрытая по умолчанию информация */
+.timeline-item .info {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background: white;
+    opacity: 0;
+    transform: scale(0.8);
+    transform-origin: top left;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    overflow: auto;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Раскрытая карточка */
+.timeline-item.expanded {
+    flex-basis: 500px;
+    height: 300px;
+}
+.timeline-item.expanded .info {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.some-little-event {
+    background-color: white;
+    width: 200px;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    text-align: center;
+}
+
+.timeline-sign {
+    text-align: center;
+    font-size: 60px;
+    font-family: "Gosznak", sans-serif;
+    margin-bottom: 0;
+    margin-top: 50px;
+}
+
+@font-face {
+    font-family: 'Gosznak';
+    src: url('fonts/Gosznak-Semi Bold.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}

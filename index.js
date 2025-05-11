@@ -1,13 +1,21 @@
 document.querySelectorAll('.timeline-item').forEach(item => {
     item.addEventListener('click', () => {
-        const isOpen = item.classList.contains('expanded');
-        document.querySelectorAll('.timeline-item.expanded').forEach(el => {
+        // Закрыть все остальные карточки
+        document.querySelectorAll('.timeline-item').forEach(el => {
             if (el !== item) el.classList.remove('expanded');
         });
-        if (isOpen) {
-            item.classList.remove('expanded');
-        } else {
-            item.classList.add('expanded');
+
+        // Переключить класс текущего
+        const isExpanded = item.classList.contains('expanded');
+        item.classList.toggle('expanded');
+
+        // Если карточка стала открытой — прокрутиться к ней
+        if (!isExpanded) {
+            item.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center'
+            });
         }
     });
 });

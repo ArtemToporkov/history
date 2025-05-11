@@ -1,29 +1,35 @@
-﻿html, body {
+﻿/* Сброс и глобальные настройки */
+html, body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    overflow-x: auto;
-}
-
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow-x: auto;       /* документ скроллится горизонтально */
+    overflow-y: hidden;
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Скрытие горизонтального скроллбара */
+body::-webkit-scrollbar {
+    display: none;
+}
+body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 
+/* Основной контейнер временной линии */
 .timeline {
     display: flex;
     align-items: center;
-    justify-content: center;
-    overflow-x: auto;
-    padding: 20px;
     gap: 100px;
     position: relative;
-    width: 100%;
+    height: 100%;
+    width: max-content;
+    padding-right: 200px;
+    padding-left: 200px;
 }
 
+/* Горизонтальная линия сквозь таймлайн */
 .timeline .line {
     position: absolute;
     top: 50%;
@@ -32,42 +38,58 @@ body {
     height: 2px;
     background-color: #ccc;
     z-index: 0;
+    pointer-events: none;
 }
 
-.timeline-item .label {
-    position: absolute;
-    font-size: 14px;
-    text-align: center;
-    margin-top: 6px;
-    color: #333;
-    font-weight: 500;
-}
-
-
+/* Отдельные элементы таймлайна */
 .timeline-item {
     position: relative;
-    flex: 0 0 300px;
+    flex: 0 0 300px;               /* базовая ширина карточки */
     height: 200px;
     cursor: pointer;
     transition: flex-basis 0.4s ease, height 0.4s ease;
-    overflow: hidden;
+    overflow: visible;
     border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    text-align: center;
 }
 
+/* Заголовок под картинкой */
+.timeline .time {
+    text-align: center;
+    margin-top: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+.timeline-item.expanded .time {
+    display: none;
+}
+
+/* Миниатюра (картинка) */
 .timeline-item .thumb {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     display: block;
+    border-radius: 8px;
+    object-fit: cover;
 }
 
+/* Альтернатива изображению — текстовая плашка */
+.timeline-item .thumb.text {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Скрытая по умолчанию информация */
 .timeline-item .info {
     position: absolute;
     top: 0; left: 0;
     width: 100%;
     height: 100%;
     padding: 20px;
+    border-radius: 8px;
     box-sizing: border-box;
     background: white;
     opacity: 0;
@@ -76,24 +98,29 @@ body {
     transition: opacity 0.3s ease, transform 0.3s ease;
     overflow: auto;
     pointer-events: none;
+    z-index: 1;
 }
 
-/* Класс, который включит “расширение” */
+/* Раскрытая карточка */
 .timeline-item.expanded {
-    flex-basis: 500px;     /* желаемая новая ширина */
-    height: 300px;         /* и высота */
+    flex-basis: 500px;
+    height: 300px;
 }
-
 .timeline-item.expanded .info {
     opacity: 1;
     transform: scale(1);
     pointer-events: auto;
 }
 
-.timeline-item.expanded {
+.some-little-event {
+    background-color: white;
+    width: 200px;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
     text-align: center;
-}
-
-.timeline-item.expanded p {
-    text-align: left;
 }

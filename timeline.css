@@ -252,3 +252,36 @@ body {
     font-weight: normal;
     font-style: normal;
 }
+
+@media (max-width: 768px) {
+
+    .timeline {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+    }
+
+    .timeline .info {
+        width: 300px;
+        height: 500px;
+    }
+
+    .timeline-item {
+        scroll-snap-align: start;
+    }
+
+    .timeline-item.expanded {
+        flex-basis: 300px;
+        height: 500px;
+    }
+
+    .buttons-container {
+        display: none;
+    }
+
+    .timeline .info {
+        font-size: 20px;
+    }
+}

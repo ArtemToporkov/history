@@ -1,3 +1,10 @@
+const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+
+document.addEventListener('gesturestart', function(e) {
+    e.preventDefault();
+}, { passive: false });
+
+
 (function () {
     const speedFactor = 1;
     const btnStep = 600;
@@ -51,6 +58,7 @@
     }
 
     function onWheel(event) {
+        if (isMobile()) return;
         if (isMouseOverScrollableInfo(event)) {
             return;
         }
@@ -82,7 +90,7 @@
 
             const isExpanded = item.classList.toggle('expanded');
 
-            if (isExpanded) {
+            if (isExpanded && !isMobile()) {
                 const rect = item.getBoundingClientRect();
                 const middleOffset = (rect.left + rect.right) / 2 - window.innerWidth / 2;
                 targetX = window.scrollX + middleOffset;

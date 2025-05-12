@@ -33,10 +33,13 @@ p {
     font-size: 60px;
     font-family: 'Gosznak', sans-serif;
     margin-bottom: 0;
+    text-align: center;
 }
 
 .info {
     font-size: 20px;
+    max-width: 50%;
+    text-align: center;
 }
 
 .timeline-button {
@@ -86,6 +89,7 @@ a:hover {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    text-align: center;
 }
 
 .second-dotted-line {
@@ -128,10 +132,6 @@ a:hover {
     max-width: 40%;
 }
 
-.tutorial-text {
-
-}
-
 .tutorial-gif {
     max-width: 300px;
     max-height: 300px;
@@ -144,4 +144,16 @@ a:hover {
     src: url('fonts/Gosznak-Semi Bold.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
+}
+
+@media (max-width: 768px) {
+    .tutorial {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .info {
+        max-width: 100%;
+    }
 }

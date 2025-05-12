@@ -1,17 +1,18 @@
-const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
-
-document.addEventListener('gesturestart', function(e) {
-    e.preventDefault();
-}, { passive: false });
-
-
 (function () {
+    // Блокируем pinch-to-zoom / другие жесты
+    document.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
     const speedFactor = 1;
     const btnStep = 600;
     const easeFactor = 0.1;
 
     let targetX = window.scrollX;
     let isAnimating = false;
+    // Флаг прерывания автоскролла
+    let isUserInteracted = false;
+    let touchHandler = null;
 
     const btnLeft = document.querySelector('.left-button');
     const btnRight = document.querySelector('.right-button');
@@ -30,6 +31,12 @@ document.addEventListener('gesturestart', function(e) {
     }
 
     function animateScroll() {
+        // Если пользователь коснулся после старта — отменяем автоскролл
+        if (isUserInteracted) {
+            isAnimating = false;
+            return;
+        }
+
         const currentX = window.scrollX;
         const delta = targetX - currentX;
 
@@ -47,23 +54,22 @@ document.addEventListener('gesturestart', function(e) {
         requestAnimationFrame(animateScroll);
     }
 
+    function isMobile() {
+        return window.matchMedia("(max-width: 768px)").matches;
+    }
+
     function isMouseOverScrollableInfo(event) {
         const el = document.elementFromPoint(event.clientX, event.clientY);
         if (!el) return false;
 
         const expanded = el.closest('.timeline-item.expanded');
-        if (!expanded) return false;
-
-        return expanded.scrollHeight > expanded.clientHeight;
+        return expanded && expanded.scrollHeight > expanded.clientHeight;
     }
 
     function onWheel(event) {
         if (isMobile()) return;
-        if (isMouseOverScrollableInfo(event)) {
-            return;
-        }
+        if (isMouseOverScrollableInfo(event)) return;
 
-        // Иначе — скроллим страницу
         event.preventDefault();
         targetX += event.deltaY * speedFactor;
         clampTarget();
@@ -84,18 +90,34 @@ document.addEventListener('gesturestart', function(e) {
 
     items.forEach(item => {
         item.addEventListener('click', () => {
+            // Убираем expanded у других
             items.forEach(el => {
                 if (el !== item) el.classList.remove('expanded');
             });
 
             const isExpanded = item.classList.toggle('expanded');
 
-            if (isExpanded && !isMobile()) {
+            if (isExpanded) {
+                // Сбрасываем флаг и вешаем слушатель касания
+                isUserInteracted = false;
+                touchHandler = () => {
+                    isUserInteracted = true;
+                    document.removeEventListener('touchstart', touchHandler);
+                };
+                document.addEventListener('touchstart', touchHandler, { passive: true });
+
+                // Считаем новую цель скролла и запускаем анимацию
                 const rect = item.getBoundingClientRect();
                 const middleOffset = (rect.left + rect.right) / 2 - window.innerWidth / 2;
                 targetX = window.scrollX + middleOffset;
                 clampTarget();
                 ensureAnimation();
+            } else {
+                // Если карточка закрыта — снимаем слушатель, если он ещё висит
+                if (touchHandler) {
+                    document.removeEventListener('touchstart', touchHandler);
+                    touchHandler = null;
+                }
             }
         });
     });

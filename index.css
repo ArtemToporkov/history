@@ -41,6 +41,7 @@ p {
 
 .timeline-button {
     font-family: 'Gosznak', sans-serif;
+    letter-spacing: 1px;
     color: #ffded5;
     text-decoration: none;
     font-size: 40px;

@@ -194,6 +194,7 @@ body {
 
 .timeline-sign {
     text-align: center;
+    letter-spacing: 1px;
     font-size: 60px;
     font-family: "Gosznak", sans-serif;
     margin-bottom: 0;

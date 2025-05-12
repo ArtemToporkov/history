@@ -3,10 +3,9 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    overflow-x: auto;       /* документ скроллится горизонтально */
-    overflow-y: hidden;
     font-family: Arial, Helvetica, sans-serif;
     background-color: #fff5f3;
+    scrollbar-width: none;
 }
 
 p {
@@ -74,7 +73,7 @@ body {
     align-items: center;
     flex-direction: column;
     border: 3px solid #2f1c17;
-    box-shadow: -6px 6px 0 0 #2f1c17;
+    box-shadow: -6px 6px 0 0 #2f1c17;    /* Запрещаем изменение ширины при flex-контейнере */
 }
 
 /* Заголовок под картинкой */
@@ -168,21 +167,57 @@ body {
 }
 
 .timeline-sign {
-    position: absolute;
     text-align: center;
     font-size: 60px;
     font-family: "Gosznak", sans-serif;
     margin-bottom: 0;
     margin-top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed;           /* выводим из потока и привязываем к viewport */
+    top: 20px;                 /* отступ от верхнего края окна */
+    left: 50%;                 /* центральное выравнивание по горизонтали */
+    transform: translateX(-50%); /* точное центрирование */
+    z-index: 1000;
 }
 
 .info h3 {
     font-family: Gosznak, sans-serif;
 }
 
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+    gap: 40px;
+    top: 85%;
+    position: fixed;           /* фиксируем контейнер с кнопками */
+    bottom: 40px;              /* отступ от нижнего края окна */
+    left: 50%;                 /* выравниваем по центру */
+    transform: translateX(-50%); /* чтобы центр контейнера совпадал с центром экрана */
+    z-index: 1000;             /* поверх ленты */
+}
 
+.button {
+    box-shadow: -6px 6px 0 0 #2f1c17;
+    border-radius: 8px;
+    border: 3px solid #2f1c17;
+    background-color: #fff5f3;
+    font-size: 30px;
+    font-weight: bold;
+    color: #2f1c17;
+    width: 100px;
+    height: 50px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.button:hover {
+    background-color: #2f1c17;
+    color: #fff5f3;
+}
+.button:active {
+    transform: translate(-6px, 6px);
+    box-shadow: 0 0 0 0 #2f1c17;
+}
 
 @font-face {
     font-family: 'Gosznak';

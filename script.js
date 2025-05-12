@@ -19,3 +19,16 @@ document.querySelectorAll('.timeline-item').forEach(item => {
         }
     });
 });
+
+const timeline     = document.querySelector('.timeline');
+const btnLeft      = document.querySelector('.left-button');
+const btnRight     = document.querySelector('.right-button');
+const scrollAmount = 600;
+
+btnLeft.addEventListener('click', () => {
+    window.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+});
+btnRight.addEventListener('click', () => {
+    window.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+});
+

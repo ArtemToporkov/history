@@ -1,34 +1,81 @@
-document.querySelectorAll('.timeline-item').forEach(item => {
-    item.addEventListener('click', () => {
-        // Закрыть все остальные карточки
-        document.querySelectorAll('.timeline-item').forEach(el => {
-            if (el !== item) el.classList.remove('expanded');
+(function() {
+    // Параметры
+    const speedFactor = 1;     // множитель для прокрутки колесом
+    const btnStep      = 600;  // шаг при клике по кнопкам
+    const easeFactor   = 0.1;  // сглаживание анимации
+
+    let targetX     = window.scrollX;
+    let isAnimating = false;
+
+    const btnLeft   = document.querySelector('.left-button');
+    const btnRight  = document.querySelector('.right-button');
+    const items     = document.querySelectorAll('.timeline-item');
+
+    function ensureAnimation() {
+        if (!isAnimating) {
+            isAnimating = true;
+            requestAnimationFrame(animateScroll);
+        }
+    }
+
+    function clampTarget() {
+        const maxX = document.body.scrollWidth - window.innerWidth;
+        targetX = Math.max(0, Math.min(targetX, maxX));
+    }
+
+    function animateScroll() {
+        const currentX = window.scrollX;
+        const delta    = targetX - currentX;
+
+        if (Math.abs(delta) < 0.5) {
+            window.scrollTo({ left: targetX });
+            isAnimating = false;
+            return;
+        }
+
+        window.scrollTo({
+            left: currentX + delta * easeFactor,
+            behavior: 'auto'
         });
 
-        // Переключить класс текущего
-        const isExpanded = item.classList.contains('expanded');
-        item.classList.toggle('expanded');
+        requestAnimationFrame(animateScroll);
+    }
 
-        // Если карточка стала открытой — прокрутиться к ней
-        if (!isExpanded) {
-            item.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'center'
-            });
-        }
+    function onWheel(event) {
+        event.preventDefault();
+        targetX += event.deltaY * speedFactor;
+        clampTarget();
+        ensureAnimation();
+    }
+
+    btnLeft.addEventListener('click', () => {
+        targetX = window.scrollX - btnStep;
+        clampTarget();
+        ensureAnimation();
     });
-});
+    btnRight.addEventListener('click', () => {
+        targetX = window.scrollX + btnStep;
+        clampTarget();
+        ensureAnimation();
+    });
 
-const timeline     = document.querySelector('.timeline');
-const btnLeft      = document.querySelector('.left-button');
-const btnRight     = document.querySelector('.right-button');
-const scrollAmount = 600;
+    items.forEach(item => {
+        item.addEventListener('click', () => {
+            items.forEach(el => {
+                if (el !== item) el.classList.remove('expanded');
+            });
 
-btnLeft.addEventListener('click', () => {
-    window.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-});
-btnRight.addEventListener('click', () => {
-    window.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-});
+            const isExpanded = item.classList.toggle('expanded');
 
+            if (isExpanded) {
+                const rect = item.getBoundingClientRect();
+                const middleOffset = (rect.left + rect.right) / 2 - window.innerWidth / 2;
+                targetX = window.scrollX + middleOffset;
+                clampTarget();
+                ensureAnimation();
+            }
+        });
+    });
+
+    document.addEventListener('wheel', onWheel, { passive: false });
+})();

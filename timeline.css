@@ -1,5 +1,4 @@
-﻿/* Сброс и глобальные настройки */
-html, body {
+﻿html, body {
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -12,7 +11,6 @@ p {
     color: #2f1c17;
 }
 
-/* Скрытие горизонтального скроллбара */
 body::-webkit-scrollbar {
     display: none;
 }
@@ -21,7 +19,6 @@ body {
     scrollbar-width: none;
 }
 
-/* Основной контейнер временной линии */
 .timeline {
     display: flex;
     align-items: center;
@@ -33,7 +30,6 @@ body {
     padding-left: 200px;
 }
 
-/* Горизонтальная линия сквозь таймлайн */
 .line {
     position: absolute;
     top: 50%;
@@ -58,10 +54,9 @@ body {
     pointer-events: none;
 }
 
-/* Отдельные элементы таймлайна */
 .timeline-item {
     position: relative;
-    flex: 0 0 300px;               /* базовая ширина карточки */
+    flex: 0 0 300px;
     height: 200px;
     cursor: pointer;
     transition: flex-basis 0.4s ease, height 0.4s ease;
@@ -73,10 +68,9 @@ body {
     align-items: center;
     flex-direction: column;
     border: 3px solid #2f1c17;
-    box-shadow: -6px 6px 0 0 #2f1c17;    /* Запрещаем изменение ширины при flex-контейнере */
+    box-shadow: -6px 6px 0 0 #2f1c17;
 }
 
-/* Заголовок под картинкой */
 .timeline .time {
     position: absolute;
     text-align: center;
@@ -106,7 +100,6 @@ body {
     opacity: 0;
 }
 
-/* Миниатюра (картинка) */
 .timeline-item .thumb {
     width: 100%;
     height: 100%;
@@ -115,7 +108,6 @@ body {
     object-fit: cover;
 }
 
-/* Альтернатива изображению — текстовая плашка */
 .timeline-item .thumb.text {
     background-color: white;
     display: flex;
@@ -135,7 +127,6 @@ body {
     background-size: cover;
 }
 
-/* Скрытая по умолчанию информация */
 .timeline-item .info {
     position: absolute;
     top: 0; left: 0;
@@ -154,7 +145,6 @@ body {
     z-index: 1;
 }
 
-/* Раскрытая карточка */
 .timeline-item.expanded {
     flex-basis: 500px;
     height: 300px;
@@ -171,19 +161,19 @@ body {
 }
 
 .timeline-item.expanded .info::-webkit-scrollbar-track {
-    background: #ffe3dd; /* фон трека */
+    background: #ffe3dd;
     border-radius: 4px;
 }
 
 .timeline-item.expanded .info::-webkit-scrollbar-thumb {
-    background: #54332b; /* сам ползунок */
+    background: #54332b;
     border: 3px solid transparent;
     background-clip: content-box;
     border-radius: 100px;
 }
 
 .timeline-item.expanded .info::-webkit-scrollbar-thumb:hover {
-    background: #73544f; /* сам ползунок */
+    background: #73544f;
     border: 3px solid transparent;
     background-clip: content-box;
     border-radius: 100px;
@@ -208,10 +198,10 @@ body {
     font-family: "Gosznak", sans-serif;
     margin-bottom: 0;
     margin-top: 50px;
-    position: fixed;           /* выводим из потока и привязываем к viewport */
-    top: 20px;                 /* отступ от верхнего края окна */
-    left: 50%;                 /* центральное выравнивание по горизонтали */
-    transform: translateX(-50%); /* точное центрирование */
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
 }
 
@@ -226,11 +216,11 @@ body {
     align-self: center;
     gap: 40px;
     top: 85%;
-    position: fixed;           /* фиксируем контейнер с кнопками */
-    bottom: 40px;              /* отступ от нижнего края окна */
-    left: 50%;                 /* выравниваем по центру */
-    transform: translateX(-50%); /* чтобы центр контейнера совпадал с центром экрана */
-    z-index: 1000;             /* поверх ленты */
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
 }
 
 .button {

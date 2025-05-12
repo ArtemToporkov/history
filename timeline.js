@@ -1,7 +1,7 @@
 (function () {
-    const speedFactor = 1;    // множитель прокрутки колесом
-    const btnStep = 600;      // шаг при клике по кнопкам
-    const easeFactor = 0.1;   // сглаживание анимации
+    const speedFactor = 1;
+    const btnStep = 600;
+    const easeFactor = 0.1;
 
     let targetX = window.scrollX;
     let isAnimating = false;
@@ -47,13 +47,11 @@
         const expanded = el.closest('.timeline-item.expanded');
         if (!expanded) return false;
 
-        // Проверим, есть ли вертикальный скролл
         return expanded.scrollHeight > expanded.clientHeight;
     }
 
     function onWheel(event) {
         if (isMouseOverScrollableInfo(event)) {
-            // Не мешаем стандартному вертикальному скроллу карточки
             return;
         }
 

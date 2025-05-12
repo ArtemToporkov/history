@@ -35,13 +35,25 @@ body {
 }
 
 /* Горизонтальная линия сквозь таймлайн */
-.timeline .line {
+.line {
     position: absolute;
     top: 50%;
     left: 0;
     width: 100%;
-    height: 2px;
-    background: linear-gradient(to right, #2f1c17 50%, rgb(255, 245, 243) 50%);;
+    height: 3px;
+    background: linear-gradient(to right, #2f1c17 50%, rgb(255, 245, 243) 50%);
+    z-index: 0;
+    background-size: 24px 1px;
+    pointer-events: none;
+}
+
+.second-line {
+    position: absolute;
+    top: 50.5%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, #54332b 50%, rgb(255, 245, 243) 50%);
     z-index: 0;
     background-size: 24px 1px;
     pointer-events: none;
@@ -57,18 +69,42 @@ body {
     overflow: visible;
     border-radius: 8px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 3px solid #2f1c17;
+    box-shadow: -6px 6px 0 0 #2f1c17;
 }
 
 /* Заголовок под картинкой */
 .timeline .time {
+    position: absolute;
     text-align: center;
-    margin-top: 6px;
-    font-size: 16px;
+    bottom: -55px;
+    font-size: 20px;
     font-weight: 500;
-    color: #333;
+    font-family: 'Gosznak', sans-serif;
+    transition: visibility 0.3s ease, opacity 0.3s ease;
 }
 .timeline-item.expanded .time {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.timeline .title {
+    position: absolute;
+    text-align: center;
+    top: -30px;
+    margin-top: 0;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Gosznak', sans-serif;
+    transition: visibility 0.3s ease, opacity 0.3s ease;
+}
+.timeline-item.expanded .title {
+    visibility: hidden;
+    opacity: 0;
 }
 
 /* Миниатюра (картинка) */
@@ -132,12 +168,21 @@ body {
 }
 
 .timeline-sign {
+    position: absolute;
     text-align: center;
     font-size: 60px;
     font-family: "Gosznak", sans-serif;
     margin-bottom: 0;
     margin-top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
 }
+
+.info h3 {
+    font-family: Gosznak, sans-serif;
+}
+
+
 
 @font-face {
     font-family: 'Gosznak';

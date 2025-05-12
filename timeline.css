@@ -254,7 +254,6 @@ body {
 }
 
 @media (max-width: 768px) {
-
     .timeline {
         display: flex;
         flex-wrap: nowrap;
@@ -283,5 +282,13 @@ body {
 
     .timeline .info {
         font-size: 20px;
+    }
+}
+
+@media (min-resolution: 1.7dppx),
+        (-webkit-min-device-pixel-ratio: 1.7) {
+    .buttons-container,
+    .timeline-sign {
+        display: none;
     }
 }

@@ -76,6 +76,13 @@
         ensureAnimation();
     }
 
+    document.addEventListener('DOMContentLoaded', () => {
+        if (isMobile()) {
+            const initialOffset = 150;
+            window.scrollTo({ left: initialOffset, behavior: 'auto' });
+        }
+    });
+
     btnLeft.addEventListener('click', () => {
         targetX = window.scrollX - btnStep;
         clampTarget();

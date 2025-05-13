@@ -17,6 +17,7 @@ body::-webkit-scrollbar {
 body {
     -ms-overflow-style: none;
     scrollbar-width: none;
+    overscroll-behavior-y: none;
 }
 
 .timeline {
